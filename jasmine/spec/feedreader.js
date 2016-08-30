@@ -8,12 +8,12 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
-$(function() {
+$(function () {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
     * feeds definitions, the allFeeds variable in our application.
     */
-    describe('RSS Feeds', function() {
+    describe('RSS Feeds', function () {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
@@ -21,7 +21,7 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
+        it('are defined', function () {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -62,13 +62,17 @@ $(function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+        /* TODO: Write a test that ensures the menu changes
+         * visibility when the menu icon is clicked. This test
+         * should have two expectations: does the menu display when
+         * clicked and does it hide when clicked again.
+         */
         it('changes visibility when the menu icon is clicked', function () {
             var menuIcon = $('.menu-icon-link');
+
+            // Not sure if using of 'trigger' method
+            // is the right way for testing
+            // it seems like an easy solution for this task
             menuIcon.trigger('click');
             expect($('body').hasClass('menu-hidden')).toBe(false);
             menuIcon.trigger('click');
@@ -85,12 +89,12 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function (done) {
-            loadFeed(0,function () {
+            loadFeed(0, function () {
                 done();
             });
         });
 
-        it('has at least a single .entry', function (done) {
+        it('have at least a single .entry', function (done) {
             expect($('.feed > .entry-link').length).not.toBe(0);
             done();
         });
@@ -102,6 +106,11 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+        // This is the only one test suite made me nervous
+        // I am still not sure that my solution is efficient:
+        // making two requests and saving each jQuery-data
+        // and then comparing them to each other
         var result1;
         var result2;
         beforeEach(function (done) {
